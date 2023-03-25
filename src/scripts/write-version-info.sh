@@ -40,7 +40,7 @@ fi
 
 host=`hostname`
 compiledate=`date`
-treeversion=`git describe`
+treeversion=`git rev-parse --short HEAD`
 
 mkdir -p ${outputdir}
 git log > ${changesfile}

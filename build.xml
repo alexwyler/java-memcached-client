@@ -56,7 +56,7 @@
   <!-- ivy properties used -->
   <property name="ivy.settings.dir" value="${basedir}/ivy" />
   <property name="ivy.pom.url"
-      value="http://www.couchbase.org/code/couchbase/java" />
+      value="https://www.couchbase.org/code/couchbase/java" />
   <property name="ivy.pom.groupId" value="net.spy" />
   <property name="ivy.pom.description"
    value = "A client library for memcached."/>
@@ -99,9 +99,9 @@
   <loadproperties srcfile="${ivy.dir}/libraries.properties"/>
   <property name="ivy.jar" location="${lib.dir}/ivy-${ivy.version}.jar"/>
   <property name="ivy_repo_url"
-      value="http://repo2.maven.org/maven2/org/apache/ivy/ivy/${ivy.version}/ivy-${ivy.version}.jar" />
+      value="https://repo1.maven.org/maven2/org/apache/ivy/ivy/${ivy.version}/ivy-${ivy.version}.jar" />
   <property name="mvn_repo_url"
-      value="http://repo2.maven.org/maven2/org/apache/maven/maven-ant-tasks/${mvn.version}/maven-ant-tasks-${mvn.version}.jar"/>
+      value="https://repo1.maven.org/maven2/org/apache/maven/maven-ant-tasks/${mvn.version}/maven-ant-tasks-${mvn.version}.jar"/>
   <property name="mvn.jar" location="${build.dir}/maven-ant-tasks-${mvn.version}.jar" />
   <property name="build.ivy.dir" location="${build.dir}/ivy" />
   <property name="build.ivy.lib.dir" location="${build.ivy.dir}/lib" />
@@ -186,14 +186,14 @@
           <typefound uri="antlib:org.apache.ivy.ant" name="cleancache"/>
         </not>
       </condition>
-        You need Apache Ivy 2.0 or later from http://ant.apache.org/
+        You need Apache Ivy 2.0 or later from https://ant.apache.org/
         It could not be loaded from ${ivy_repo_url}
     </fail>
   </target>
 
   <target name="ivy-init" depends="ivy-init-antlib" unless="ivy.configured">
     <ivy:configure settingsid="${name}.ivy.settings" file="${ivysettings.xml}"/>
-    <property name="ivy.configured" value="true" />
+    <property name="ivy.configured" value="false" />
   </target>
 
   <!-- ======================================
@@ -291,8 +291,9 @@
         destdir="${build.test.classes}"
         debug="${javac.debug}"
         includeantruntime="false"
-        target="1.6"
-        source="1.6">
+        nowarn="on"
+        target="1.7"
+        source="1.7">
       <classpath>
         <path refid="test.classpath"/>
       </classpath>
@@ -373,8 +374,8 @@
 
   <target name="gen-version" depends="init">
     <exec executable="git" resultproperty="err" outputproperty="result">
-      <arg value="describe" />
-      <arg value="--abbrev=0" />
+      <arg value="rev-parse" />
+      <arg value="--short" />
     </exec>
     <if>
       <equals arg1="${err}" arg2="0"/>
@@ -401,8 +402,8 @@
         debug="${javac.debug}"
         deprecation="${javac.deprecation}"
         includeantruntime="false"
-        target="1.6"
-        source="1.6">
+        target="1.7"
+        source="1.7">
       <classpath refid="${name}.common.classpath" />
     </javac>
 
@@ -414,8 +415,8 @@
         debug="${javac.debug}"
         deprecation="${javac.deprecation}"
         includeantruntime="false"
-        target="1.6"
-        source="1.6">
+        target="1.7"
+        source="1.7">
       <classpath refid="${name}.common.classpath"/>
     </javac>
     <move file="${build.src.dir}/net/spy/memcached/changelog.txt"
